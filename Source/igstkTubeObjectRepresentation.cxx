@@ -151,7 +151,7 @@ void TubeObjectRepresentation::CreateActors()
                            (float)(pt->GetPosition()[2]*spacing[2]));
   sphereSource1->SetRadius(pt->GetRadius()*0.95*spacing[0]);
   vtkPolyDataMapper *sphereMapper1 = vtkPolyDataMapper::New();
-  sphereMapper1->SetInput(sphereSource1->GetOutput());
+  sphereMapper1->SetInputConnection(sphereSource1->GetOutputPort());
   
   vtkActor* sphere1 = vtkActor::New();
   sphere1->SetMapper(sphereMapper1);
@@ -184,7 +184,7 @@ void TubeObjectRepresentation::CreateActors()
   sphereSource2->SetRadius(pt->GetRadius()*0.95*spacing[0]);
   
   vtkPolyDataMapper *sphereMapper2 = vtkPolyDataMapper::New();
-  sphereMapper2->SetInput(sphereSource2->GetOutput());
+  sphereMapper2->SetInputConnection(sphereSource2->GetOutputPort());
   
   vtkActor* sphere2 = vtkActor::New();
   sphere2->SetMapper(sphereMapper2);
@@ -246,13 +246,13 @@ void TubeObjectRepresentation::CreateActors()
   //Step 7: remove any duplicate points from polydata. The tube filter
   //fails if any duplicates are present
   vtkCleanPolyData* vClean = vtkCleanPolyData::New();
-  vClean->SetInput(vPData);
+  vClean->SetInputData(vPData);
 
   //Step 8: make tubes. The number of sides per tube is set by nsides.
   //Even an nsides of 3 looks surprisingly good.
   vtkTubeFilter* vTFilter = vtkTubeFilter::New();
   vTFilter->SetNumberOfSides(5);
-  vTFilter->SetInput(vClean->GetOutput());
+  vTFilter->SetInputConnection(vClean->GetOutputPort());
   vTFilter->CappingOff();
 
   vTFilter->SetRadius(min_scalar);   //this call sets min rad.
@@ -261,7 +261,7 @@ void TubeObjectRepresentation::CreateActors()
 
   //Step 9: create a mapper of the tube
   vtkPolyDataMapper* vMapper = vtkPolyDataMapper::New();
-  vMapper->SetInput(vTFilter->GetOutput());
+  vMapper->SetInputConnection(vTFilter->GetOutputPort());
       
   vMapper->ScalarVisibilityOff();    //interpret scalars as color command
    

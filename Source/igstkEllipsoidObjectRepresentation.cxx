@@ -145,7 +145,7 @@ void EllipsoidObjectRepresentation::CreateActors()
 
   ellipsoidActor->GetProperty()->SetOpacity(this->GetOpacity());
 
-  ellipsoidMapper->SetInput( m_EllipsoidSource->GetOutput() );
+  ellipsoidMapper->SetInputConnection( m_EllipsoidSource->GetOutputPort() );
   ellipsoidActor->SetMapper(ellipsoidMapper);
 
   // We should check if the actor doesn't exist
