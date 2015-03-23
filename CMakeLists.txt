@@ -50,7 +50,7 @@ endif()
 #
 # FIND VTK
 #
-find_package(VTK REQUIRED)
+find_package(VTK REQUIRED COMPONENTS vtkRenderingOpenGL vtkInteractionStyle vtkRenderingVolumeOpenGL NO_MODULE)
 set( VTK_MIN_VERSION 5.10.0 )
 
 set( VTK_VERSION ${VTK_VERSION_MAJOR}.${VTK_VERSION_MINOR}.${VTK_VERSION_PATCH} )
@@ -58,7 +58,7 @@ set( VTK_VERSION ${VTK_VERSION_MAJOR}.${VTK_VERSION_MINOR}.${VTK_VERSION_PATCH} 
 if( ${VTK_VERSION} VERSION_LESS ${VTK_MIN_VERSION} )
   message( FATAL_ERROR "This application requires VTK version ${VTK_MIN_VERSION} or later. Provided version is ${VTK_VERSION}.")
 else()
-  INCLUDE (${USE_VTK_FILE})
+  INCLUDE (${VTK_USE_FILE})
 endif()
 
 #
